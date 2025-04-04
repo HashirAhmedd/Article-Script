@@ -13,7 +13,7 @@
   * create file .env
 
 - Step 4
-  * inside .env file create enviroment variables like given in .env.sample
+  * inside .env file create enviroment variables as given in .env.sample
 
 - Step 5
   * run main.js script

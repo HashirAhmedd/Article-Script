@@ -6,7 +6,6 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 async function optimizeContent(content) {
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-  // const result = await model.generateContent(`Rephrase the following content to make it longer and more engaging. Respond only with the revised content, without any headings or additional text. Extract the main content from the article without any introductions, summaries, or additional comments. Here is the content: ${content}`);
   const result = await model.generateContent(`Respond only with the revised content, without any headings or additional text. Extract the main content from the article without any introductions, summaries, or additional comments. Summarize the article in a concise, informative manner:
 Format your response as follows:
 1. Start with 2-3 bullet points highlighting the key takeaways

@@ -2,27 +2,30 @@ const getArticles = require("./GetNews");
 const optimizeContent = require("./OptimizeContent");
 const getPreviewText = require("./GerPreviewText");
 const getKeywords = require("./Keywords");
+const groupArticle = require("./GroupArticles");
+const getTitle = require("./GetTitle");
 
 async function processContent() {
   try {
     const articles = await getArticles();
-    let counter  = 1;
+    const groupedArticlesContent = await groupArticle(articles);
+    let counter = 1;
     const optimizedArticles = [];
-    console.log("Total Articles Length",articles.length)
-    for (const article of articles) {
-      if (article.content) {
+    console.log("Total Articles Length", groupedArticlesContent.length);
+    for (const article of groupedArticlesContent) {
+      if (article && article.replace(" ", "").length > 40) {
         console.log(`Starting processing article ${counter} ... `);
-        const optimizedContent = await optimizeContent(article.content);
+        const optimizedContent = await optimizeContent(article.slice(20));
         optimizedArticles.push({
-          title: article.title,
-          Time: article.Time,
+          title: await getTitle(optimizedContent),
+          Time: article.slice(0, 20),
           content: optimizedContent,
           previewText: await getPreviewText(optimizedContent),
           keywords: await getKeywords(optimizedContent),
         });
         counter++;
-        console.log("Waiting 6 seconds before processing the next article...");
-        await new Promise((resolve) => setTimeout(resolve, 6000));
+        console.log("Waiting 10 seconds before processing the next article...");
+        await new Promise((resolve) => setTimeout(resolve, 10000));
       }
     }
     return optimizedArticles; // [ {title, previewText, content, Time, keywords} ]
@@ -32,7 +35,7 @@ async function processContent() {
 }
 
 processContent().then((optimizedArticles) => {
-  console.log("Starting Sending Data To DB")
+  console.log("Starting Sending Data To DB");
   //storing optimized articles into db
   for (article of optimizedArticles) {
     if (article) {
