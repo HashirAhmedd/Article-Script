@@ -5,8 +5,15 @@ dotenv.config();
 const query =
   '("Artificial Intelligence" OR "Machine Learning") AND ("AI Ethics" OR "Deep Learning")';
 
-const fromDate = '2025-03-20';   //YYYY-MM-DD
-const tillDate = '2025-04-04';   //YYYY-MM-DD
+  const yesterday = new Date();
+yesterday.setDate(yesterday.getDate() - 1);
+
+const formatted = yesterday.toISOString().split('T')[0];
+console.log(formatted);
+
+
+const fromDate = formatted
+const tillDate = formatted
 
 
 const getArticles = async () => {
