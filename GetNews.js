@@ -24,8 +24,8 @@ const getArticles = async () => {
   let articlesContent = [];
   for (const [index, article] of articles.entries()) {
       let content = await scrape(article.url);
-      content = content.reduce((max, word) => word.length > max.length ? word : max, "");
-      articlesContent.push({ title: article.title, content, Time: article.publishedAt });
+       content = content.reduce((max, word) => word.length > max.length ? word : max, "");
+       articlesContent.push({ title: article.title, content, Time: article.publishedAt });
   } 
   return articlesContent
 };

@@ -19,7 +19,7 @@ const groupArticles = async (articles) => {
   const response = await result.response;
   const text = response.candidates[0]?.content || "[]"; // Handle empty response
 
-  const cleanedText = text.parts[0].text.replace(/```json\n|\n```/g, "").trim();
+  const cleanedText = text.parts[0].text.replace(/```json\n|\n```/g, "").replace(/,\s*\]/g, "]").replace(/,\s*}/g, "}").trim();
 
   try {
     const groupedArticles = JSON.parse(cleanedText);
