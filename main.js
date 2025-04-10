@@ -24,8 +24,8 @@ async function processContent() {
           keywords: await getKeywords(optimizedContent),
         });
         counter++;
-        console.log("Waiting 10 seconds before processing the next article...");
-        await new Promise((resolve) => setTimeout(resolve, 10000));
+        console.log("Waiting 30 seconds before processing the next article...");
+        await new Promise((resolve) => setTimeout(resolve, 30000));
       }
     }
     return optimizedArticles; // [ {title, previewText, content, Time, keywords} ]
