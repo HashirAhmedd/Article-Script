@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "./Backend/app.js",
   "scripts": {
-    "start" : "node ./Backend/app.js",
-    "dev" : "nodemon ./Backend/app.js",
+    "start": "node ./Backend/app.js",
+    "dev": "nodemon ./Backend/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -14,9 +14,12 @@
   "dependencies": {
     "@google/generative-ai": "^0.21.0",
     "cheerio": "^1.0.0",
+    "cloudinary": "^2.7.0",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "form-data": "^4.0.3",
     "mongoose": "^8.9.7",
+    "node-fetch": "^3.3.2",
     "nodemon": "^3.1.9"
   }
 }

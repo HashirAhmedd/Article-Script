@@ -4,6 +4,7 @@ const getPreviewText = require("./GerPreviewText");
 const getKeywords = require("./Keywords");
 const groupArticle = require("./GroupArticles");
 const getTitle = require("./GetTitle");
+const getImage = require("./GetImage");
 
 async function processContent() {
   try {
@@ -22,13 +23,14 @@ async function processContent() {
           content: optimizedContent,
           previewText: await getPreviewText(optimizedContent),
           keywords: await getKeywords(optimizedContent),
+          image_url: await getImage(previewText),
         });
         counter++;
-        console.log("Waiting 30 seconds before processing the next article...");
-        await new Promise((resolve) => setTimeout(resolve, 30000));
+        console.log("Waiting 60 seconds before processing the next article...");
+        await new Promise((resolve) => setTimeout(resolve, 60000));
       }
     }
-    return optimizedArticles; // [ {title, previewText, content, Time, keywords} ]
+    return optimizedArticles; // [ {title, previewText, content, Time, keywords, image_url} ]
   } catch (error) {
     console.error("Error processing content:", error);
   }
