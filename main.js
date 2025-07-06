@@ -23,7 +23,7 @@ async function processContent() {
           content: optimizedContent,
           previewText: await getPreviewText(optimizedContent),
           keywords: await getKeywords(optimizedContent),
-          image_url: await getImage(previewText),
+          image_url: await getImage(optimizedContent),
         });
         counter++;
         console.log("Waiting 60 seconds before processing the next article...");
