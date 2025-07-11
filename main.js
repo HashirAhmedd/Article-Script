@@ -17,14 +17,25 @@ async function processContent() {
       if (article && article.replace(" ", "").length > 40) {
         console.log(`Starting processing article ${counter} ... `);
         const optimizedContent = await optimizeContent(article.slice(20));
+        const previewText = await getPreviewText(optimizedContent);
         optimizedArticles.push({
           title: await getTitle(optimizedContent),
           Time: article.slice(0, 20),
           content: optimizedContent,
-          previewText: await getPreviewText(optimizedContent),
+          previewText,
           keywords: await getKeywords(optimizedContent),
-          image_url: await getImage(optimizedContent),
+          image_url: await getImage(previewText),
         });
+        if (optimizedArticles[counter-1]) {
+          //storing current article
+          console.log(`Storing article ${counter} into DB`);
+          fetch("https://gen-ai-backend-nine.vercel.app/articles", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(optimizedArticles[counter-1]),
+          });
+          console.log(`Article ${counter} stored in DB`);
+        }
         counter++;
         console.log("Waiting 60 seconds before processing the next article...");
         await new Promise((resolve) => setTimeout(resolve, 60000));
@@ -37,15 +48,7 @@ async function processContent() {
 }
 
 processContent().then((optimizedArticles) => {
-  console.log("Starting Sending Data To DB");
-  //storing optimized articles into db
-  for (article of optimizedArticles) {
-    if (article) {
-      fetch("https://gen-ai-backend-nine.vercel.app/articles", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(article),
-      });
-    }
+  if(optimizedArticles){
+    console.log("All articles stored in DB");
   }
 });
